@@ -29,3 +29,7 @@ Route::post('/matches/{match}/update-scores', 'MatchController@updateScores')->n
 // Route::resource('goals','GoalController');
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
