@@ -38,7 +38,7 @@
           <li><a href="{{route('matches.index')}}"><i class="fa fa-circle-o"></i> Matches</a></li>
           </ul>
         </li>
-        <li class="active treeview">
+        {{-- <li class="active treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>League Table</span>
             <span class="pull-right-container">
@@ -51,7 +51,7 @@
             <li><a href="index2.html"><i class="fa fa-circle-o"></i> Stats</a></li>
             <li><a href="index2.html"><i class="fa fa-circle-o"></i> Players</a></li>
           </ul>
-        </li>
+        </li> --}}
         {{-- <li class="header">LABELS</li>
         <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>

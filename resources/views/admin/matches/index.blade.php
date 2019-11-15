@@ -34,7 +34,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($matches as $match)
+                            @foreach ($matches as $keys=>$match)
                             
                             <?php 
                             
@@ -46,23 +46,25 @@
                                         foreach($match->goals as $goal){
                                             if($goal->player->team_id == $match->team1_id){
                                                 array_push($homeGoals, [
-                                                    'player' => $goal->player->first_name,
+                                                    'player' => $goal->player->first_name.' '.$goal->player->last_name,
                                                     'time' => $goal->time
                                                 ]);
                                             }else{
                                                 array_push($awayGoals, [
-                                                    'player' => $goal->player->first_name,
+                                                    'player' => $goal->player->first_name.' '.$goal->player->last_name,
                                                     'time' => $goal->time
                                                 ]);
                                             }
                                         }
                                     }
-                                }    
+                                } 
+                               
+                               
                             ?>
                             
-                            <tr style="font-weight:500;">
+                            <tr style="font-weight:500;" onclick="reveal({{$keys}})">
                                 <td>{{$match->team1->name}}</td>
-                                <th>VS</th>
+                                <td>VS</td>
                                 <td>{{$match->team2->name}}</td>
                                 <td>{{$match->start_time}}</td>
                                 <td>@if($match->status == 1) {{ count($homeGoals) }} - {{count($awayGoals)}} @else - @endif</td>
@@ -90,10 +92,35 @@
                                 <a href="{{route('matches.add_scores', [$match->id])}}"><i class="fa fa-plus" aria-hidden="true"></i></a>
                                 </td>
                             </tr>
+
+                            <tr id='toggle-{{$keys}}' style="display:none;">
+                                    <td> @foreach ($homeGoals as $gol)
+                                            <ul> 
+                                                <li>{{$gol['player']}}({{$gol['time']}}')</li>
+                                            </ul>
+                                            @endforeach
+                                        </td>
+                                <td>
+                                </td>
+                                <td> @foreach ($awayGoals as $gol)
+                                    <ul> 
+                                        <li>{{$gol['player']}}({{$gol['time']}}')</li>
+                                    </ul>
+                                    @endforeach
+                                </td>
+                            </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
 </section>
+
 @endsection
+    <script>
+        const reveal=(keys)=>{
+            let id=`#toggle-${keys}`;
+            $(id).toggle("slow");
+        }
+    </script>
+

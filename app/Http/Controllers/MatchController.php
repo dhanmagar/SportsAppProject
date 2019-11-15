@@ -16,35 +16,6 @@ use Illuminate\Support\Facades\DB;
         public function index()
         {
             $matches=Match::with(['team1', 'team2','goals.player'])->get();
-            // dump($matches);
-            // foreach($matches as $key=>$match){
-            //     $homeGoals = [];
-            //     $awayGoals = [];
-
-            //     if($match->status == 1){
-            //         if(count($match->goals)){
-            //             foreach($match->goals as $goal){
-            //                 if($goal->player->team_id == $match->team1_id){
-            //                     array_push($homeGoals, [
-            //                         'player' => $goal->player->first_name.' '.$goal->player->last_name,
-            //                         'time' => $goal->time
-            //                     ]);
-            //                 }else{
-            //                     array_push($awayGoals, [
-            //                         'player' => $goal->player->first_name.' '.$goal->player->last_name,
-            //                         'time' => $goal->time
-            //                     ]);
-            //                 }
-            //             }
-            //         }
-            //     }
-
-            //     $matches[$key]->home_goals = $homeGoals;
-            //     $matches[$key]->away_goals = $awayGoals;
-            //}
-            
-            //dd($matches);
-            
             return view('admin.matches.index',compact('matches'));
         }
 
