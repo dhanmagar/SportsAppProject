@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GuzzleControler;
 use Illuminate\Http\Request;
 
 /*

@@ -13,7 +13,6 @@ class teamController extends Controller
 
         $teams = Team::orderby('id', 'desc')->get();
         return view('admin.teams.index', compact('teams'));
-
     }
 
 
@@ -21,46 +20,45 @@ class teamController extends Controller
     {
 
         return view('admin.teams.create');
-
     }
 
     public function store(Request $request)
-    {     
+    {
         $request->validate([
             'name' => 'required',
-            ]);
-            if($request->file('logo')){
-                $logoName = time().'-'.$request->file('logo')->getClientOriginalName();
-                if (!file_exists(public_path('/images'))) {
-                  mkdir(public_path('/images'), 0755, true);
-                }
-                $oldFileName = $team->logo;
-                if($request->file('logo')->move(public_path('/images'), $logoName)){
-                    $team->logo = $logoName;
-                }
-                if($oldFileName && file_exists(public_path('/image').'/'.$oldFileName)){
-                  unlink(public_path('/image').'/'.$oldFileName);
-                }
+        ]);
+        $team = new Team;
+        if ($request->file('logo')) {
+
+            $logoName = time() . '-' . $request->file('logo')->getClientOriginalName();
+            if (!file_exists(public_path('/images'))) {
+                mkdir(public_path('/images'), 0755, true);
             }
-        team::create($request->all()); 
-        return redirect()->route('teams.index')->with('success','team created successfully.');
-    
+            $oldFileName = $team->logo;
+            if ($request->file('logo')->move(public_path('/images'), $logoName)) {
+                $team->logo = $logoName;
+            }
+            if ($oldFileName && file_exists(public_path('/image') . '/' . $oldFileName)) {
+                unlink(public_path('/image') . '/' . $oldFileName);
+            }
+        }
+
+        team::create($request->all());
+        return redirect()->route('teams.index')->with('success', 'team created successfully.');
     }
 
 
     public function show(Team $team)
     {
 
-        return view('admin.teams.show',compact('team'));
-
+        return view('admin.teams.show', compact('team'));
     }
 
 
     public function edit(Team $team)
     {
 
-        return view('admin.teams.edit',compact('team'));
-
+        return view('admin.teams.edit', compact('team'));
     }
 
 
@@ -69,33 +67,31 @@ class teamController extends Controller
         $request->validate([
             'name' => "required|unique:teams,name,$team->id",
         ]);
-        
-        if($request->file('logo')){
-           
-            $logoName = time().'-'.$request->file('logo')->getClientOriginalName();
+
+        if ($request->file('logo')) {
+
+            $logoName = time() . '-' . $request->file('logo')->getClientOriginalName();
             if (!file_exists(public_path('/images'))) {
-              mkdir(public_path('/images'), 0755, true);
+                mkdir(public_path('/images'), 0755, true);
             }
             $oldFileName = $team->logo;
-            if($request->file('logo')->move(public_path('/images'), $logoName)){
+            if ($request->file('logo')->move(public_path('/images'), $logoName)) {
                 $team->logo = $logoName;
             }
-            if($oldFileName && file_exists(public_path('/image').'/'.$oldFileName)){
-              unlink(public_path('/image').'/'.$oldFileName);
+            if ($oldFileName && file_exists(public_path('/image') . '/' . $oldFileName)) {
+                unlink(public_path('/image') . '/' . $oldFileName);
             }
         }
         $team->update($request->all());
-        
-        return redirect()->route('teams.index')->with('success','team updated successfully');
 
+        return redirect()->route('teams.index')->with('success', 'team updated successfully');
     }
 
 
     public function destroy(team $team)
     {
-        
+
         $team->delete();
-        return redirect()->route('teams.index')->with('success','team deleted successfully');
-        
+        return redirect()->route('teams.index')->with('success', 'team deleted successfully');
     }
 }

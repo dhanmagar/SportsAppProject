@@ -20,12 +20,13 @@ class ResetPasswordController extends Controller
 
     use ResetsPasswords;
 
+
     /**
      * Where to redirect users after resetting their password.
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = 'teams';
 
     /**
      * Create a new controller instance.
@@ -34,6 +35,7 @@ class ResetPasswordController extends Controller
      */
     public function __construct()
     {
+
         $this->middleware('guest');
     }
 }

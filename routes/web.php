@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,25 +10,21 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Http\Controllers\GuzzleControler;
 
-Route::get('login', array('uses' => 'HomeController@showLogin'));
-Route::post('login', array('uses' => 'HomeController@doLogin'));
-
-Route::resource('teams', 'teamController');
-Route::resource('players', 'playerController');
-Route::Resource('matches','MatchController');
-Route::get('/matches/{match}/add-scores', 'MatchController@addScores')->name('matches.add_scores');
-Route::post('/matches/{match}/update-scores', 'MatchController@updateScores')->name('matches.update_scores');
-// Route::group(['prefix'=>'matches'], function(){
-//     Route::Resource('/{match}/add-score','GoalController');
+// Route::get('/', function () {
+//     return view('home');
 // });
-// Route::resource('goals','GoalController');
-
-
-
+Route::get('/', function () {
+    return view('admin.matches.indexa');
+});
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('teams', 'teamController');
+    Route::resource('players', 'playerController');
+    Route::Resource('matches', 'MatchController');
+    Route::get('/matches/{match}/add-scores', 'MatchController@addScores')->name('matches.add_scores');
+    Route::post('/matches/{match}/update-scores', 'MatchController@updateScores')->name('matches.update_scores');
+    Route::get('/pl', 'GuzzleController@getRemotedata')->name('pl');
+});
